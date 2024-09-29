@@ -1,10 +1,10 @@
-from db.models.base_model import BaseModel
-from db.models.task import Task
+from typing import List
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Integer, ForeignKey
 
-from typing import List
+from db.models.base_model import BaseModel
+from db.models.task import Task
 
 
 class User(BaseModel):

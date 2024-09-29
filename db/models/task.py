@@ -1,10 +1,11 @@
 import datetime
 
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import String, Integer, ForeignKey, DateTime
+
 from db.models.base_model import BaseModel
 from db.models.user import User
 
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, Integer, ForeignKey, DateTime
 
 
 class Task(BaseModel):
