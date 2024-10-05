@@ -9,4 +9,6 @@ engine = create_engine(
     echo=True
 )
 
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(
+    bind=engine
+)
