@@ -4,7 +4,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Integer, ForeignKey
 
 from db.models.base_model import BaseModel
-from db.models.task import Task
 
 
 class User(BaseModel):
@@ -21,10 +20,6 @@ class User(BaseModel):
     password: Mapped[str] = mapped_column(
         String(20),
         nullable=False
-    )
-    task_id: Mapped[int] = mapped_column(
-        Integer,
-        ForeignKey("task.id")
     )
     tasks: Mapped[List["Task"]] = relationship(
         "Task",

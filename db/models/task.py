@@ -7,7 +7,6 @@ from db.models.base_model import BaseModel
 from db.models.user import User
 
 
-
 class Task(BaseModel):
     __tablename__ = "task"
 

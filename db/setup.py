@@ -1,5 +1,5 @@
-from models import base_model
-from db_connection import engine
+from db.models import base_model
+from db.db_connection import engine
 
 
 def setup_db():
