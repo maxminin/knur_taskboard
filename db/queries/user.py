@@ -1,7 +1,5 @@
 import sqlalchemy as sa
 
-from fastapi import Response
-
 from db.db_connection import Session
 from db.models.user import User
 
@@ -12,22 +10,25 @@ class UserORM:
     def get_users() -> list[User]:
         query = sa.select(User)
         with Session() as session:
-            result = session.scalars(query)
+            result = session.execute(query)
             return result.all()
 
     @staticmethod
-    def get_user_by_id(user_id: int) -> User:
-        query = (sa.select(User)
-                 .where(User.id == user_id))
-
+    def get_user_by_id(
+            user_id: int
+    ) -> User:
+        query = (
+            sa.select(User)
+            .where(User.id == user_id)
+        )
         with Session() as session:
             user = session.scalar(query)
-            return user
+            return user.first()
 
     @staticmethod
-    def create_user(data: dict) -> User:
-        new_user = User(**data)
-
+    def create_user(
+            new_user: User
+    ) -> User:
         with Session() as session:
             session.add(new_user)
             session.commit()
@@ -35,25 +36,30 @@ class UserORM:
             return new_user
 
     @staticmethod
-    def update_user(data: dict) -> User:
-        user_id = data.get('id')
-        query = (sa.update(User).
-                 where(User.id == user_id).
-                 values(data))
-
+    def update_user(
+            user: dict,
+            user_id: int
+    ) -> User:
+        query = (
+            sa.update(User)
+            .where(User.id == user_id).
+             values(user)
+        )
         with Session() as session:
             session.execute(query)
             session.commit()
-            updated_user = (session.
-                            scalar(sa.select(User).
-                                   where(User.id == user_id)))
+            session.refresh()
+            updated_user = UserORM.get_user_by_id(user_id)
             return updated_user
 
     @staticmethod
-    def delete_user(user_id): #tut ne jebu type hint
-        query = (sa.delete(User).
-                 where(User.id == user_id))
+    def delete_user(
+            user_id: int
+    ) -> None:
+        query = (
+            sa.delete(User).
+            where(User.id == user_id)
+        )
         with Session() as session:
             session.execute(query)
             session.commit()
-            return Response(content="200 OK") #jebu kak tut response postroitb
