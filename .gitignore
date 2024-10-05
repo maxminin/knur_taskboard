@@ -1,0 +1,39 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+env/
+ENV/
+.env/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+
+# Pytest
+.cache/
+pytestdebug.log
+
+# MyPy
+.mypy_cache/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+
+# FastAPI files
+*.db
+*.sqlite3
+*.log
