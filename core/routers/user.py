@@ -49,9 +49,9 @@ def create_user(
             user=new_user
         )
     )
-    new_user = (UserSchema.
-                from_orm(new_user_data).
-                dict())
+    new_user = UserSchema.from_orm(
+        new_user_data
+    ).dict()
     return JSONResponse(content={"new_user": new_user})
 
 
