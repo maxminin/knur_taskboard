@@ -38,13 +38,13 @@ class UserORM:
 
     @staticmethod
     def update_user(
-            user: dict,
+            user_data: dict,
             user_id: int
     ) -> User:
         query = (
             sa.update(User)
             .where(User.id == user_id).
-            values(user)
+            values(**user_data)
         )
         with Session() as session:
             session.execute(query)

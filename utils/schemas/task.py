@@ -7,4 +7,6 @@ class TaskSchema(BaseIdSchema):
     created_at: str
     updated_at: str
 
-
+    class Config:
+        orm_mode = True
+        from_attributes = True
