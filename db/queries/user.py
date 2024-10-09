@@ -2,6 +2,7 @@ import sqlalchemy as sa
 
 from db.db_connection import Session
 from db.models.user import User
+from utils.schemas.user import UserSchema
 
 
 class UserORM:
@@ -10,7 +11,7 @@ class UserORM:
     def get_users() -> list[User]:
         query = sa.select(User)
         with Session() as session:
-            result = session.execute(query)
+            result = session.scalars(query)
             return result.all()
 
     @staticmethod
@@ -23,7 +24,7 @@ class UserORM:
         )
         with Session() as session:
             user = session.scalar(query)
-            return user.first()
+            return user
 
     @staticmethod
     def create_user(
@@ -37,18 +38,17 @@ class UserORM:
 
     @staticmethod
     def update_user(
-            user: dict,
+            user_data: dict,
             user_id: int
     ) -> User:
         query = (
             sa.update(User)
             .where(User.id == user_id).
-             values(user)
+            values(**user_data)
         )
         with Session() as session:
             session.execute(query)
             session.commit()
-            session.refresh()
             updated_user = UserORM.get_user_by_id(user_id)
             return updated_user
 
