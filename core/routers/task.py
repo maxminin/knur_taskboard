@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
 from db.queries.task import TaskOrm
-from utils.schemas.task import TaskSchema
+from utils.schemas.task import TaskSchema, InputTaskSchema
 from utils.pydatic_to_orm.task import pydantic_to_sqlalchemy
 
 task_router = APIRouter(prefix="/tasks")
@@ -40,7 +40,7 @@ def get_task_by_id(
     response_model=TaskSchema
 )
 def create_task(
-        new_task: TaskSchema
+        new_task: InputTaskSchema
 ) -> JSONResponse:
     new_task_data = TaskOrm.create_task(
         pydantic_to_sqlalchemy(
@@ -63,14 +63,12 @@ def update_task(
         task_data: dict,
         task_id: int
 ) -> JSONResponse:
-    updated_task = (
-        TaskSchema.
-        from_orm(
-            TaskOrm.update_task(
-                data=task_data,
-                task_id=task_id
-            )
-        ).dict())
+    updated_task = TaskSchema.from_orm(
+        TaskOrm.update_task(
+            data=task_data,
+            task_id=task_id
+        )
+    ).dict()
     return JSONResponse(content={"Task": updated_task})
 
 
@@ -82,4 +80,4 @@ def delete_task(
         task_id: int
 ) -> JSONResponse:
     TaskOrm.delete_task(task_id=task_id)
-    return JSONResponse(content={"Task deleted"})
+    return JSONResponse(content="Task deleted")

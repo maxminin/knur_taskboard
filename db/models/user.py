@@ -21,7 +21,3 @@ class User(BaseModel):
         String(20),
         nullable=False
     )
-    # tasks: Mapped[List["Task"]] = relationship(
-    #     "Task",
-    #     back_populates="user"
-    # )
