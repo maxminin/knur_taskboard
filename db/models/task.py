@@ -29,11 +29,4 @@ class Task(BaseModel):
         onupdate=datetime.datetime.utcnow,
         nullable=False
     )
-    user_id: Mapped[int] = mapped_column(
-        Integer,
-        ForeignKey("user.id")
-    )
-    user: Mapped['User'] = relationship(
-        "User",
-        back_populates="tasks"
-    )
+

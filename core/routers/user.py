@@ -6,11 +6,11 @@ from utils.schemas.user import UserSchema
 from utils.pydatic_to_orm.user import pydantic_to_sqlalchemy
 
 
-user_router = APIRouter()
+user_router = APIRouter(prefix="/users")
 
 
 @user_router.get(
-    "/users",
+    "/",
     response_model=UserSchema
 )
 def get_users() -> JSONResponse:
@@ -23,7 +23,7 @@ def get_users() -> JSONResponse:
 
 
 @user_router.get(
-    "/users/{user_id}",
+    "/{user_id}",
     response_model=UserSchema
 )
 def get_user_by_id(
@@ -38,7 +38,7 @@ def get_user_by_id(
 
 
 @user_router.post(
-    "/users/create",
+    "/create",
     response_model=UserSchema
 )
 def create_user(
@@ -56,7 +56,7 @@ def create_user(
 
 
 @user_router.put(
-    "/users/update"
+    "/update"
 )
 def update_user(
         user: dict,
@@ -71,7 +71,7 @@ def update_user(
 
 
 @user_router.delete(
-    "/users/delete"
+    "/delete"
 )
 def delete_user(
         user_id: int
