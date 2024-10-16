@@ -29,11 +29,10 @@ def get_users() -> JSONResponse:
 def get_user_by_id(
         user_id: int
 ) -> JSONResponse:
-    user = (
-        UserSchema.
-        from_orm(UserORM.get_user_by_id(user_id)).
-        dict()
-        )
+    user = UserSchema.from_orm(
+        UserORM.get_user_by_id(
+            user_id
+        )).dict()
     return JSONResponse(content={"User": user})
 
 
