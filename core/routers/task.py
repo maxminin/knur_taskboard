@@ -29,10 +29,10 @@ def get_tasks() -> JSONResponse:
 def get_task_by_id(
         task_id: int
 ) -> JSONResponse:
-    task = (
-        TaskSchema.
-        from_orm(TaskOrm.get_task_by_id(task_id))
-        .dict())
+    task = TaskSchema.from_orm(
+        TaskOrm.get_task_by_id(
+            task_id
+        )).dict()
     return JSONResponse(content={"Task": task})
 
 
