@@ -1,6 +1,7 @@
 import sqlalchemy as sa
 
 from db.db_connection import Session
+from db.models.task import Task
 from db.models.user import User
 from utils.schemas.user import UserSchema
 
@@ -63,3 +64,12 @@ class UserORM:
         with Session() as session:
             session.execute(query)
             session.commit()
+
+    @staticmethod
+    def get_user_tasks(
+            user_id: int
+    ) -> list[Task]:
+        query = sa.select(User).where(User.id == user_id)
+        with Session() as session:
+            user_tasks = session.scalar(query).tasks
+            return user_tasks

@@ -6,6 +6,7 @@ from .base import BaseIdSchema
 class TaskSchema(BaseIdSchema):
     title: str
     is_done: bool
+    user_id: int
 
     class Config:
         orm_mode = True

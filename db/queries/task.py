@@ -1,7 +1,10 @@
 import sqlalchemy as sa
 
+from sqlalchemy.orm import joinedload
+
 from db.db_connection import Session
 from db.models.task import Task
+from db.models.user import User
 
 
 class TaskOrm:

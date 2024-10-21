@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from db.queries.task import TaskOrm
 from utils.schemas.task import TaskSchema, InputTaskSchema
 from utils.pydatic_to_orm.task import pydantic_to_sqlalchemy
+from utils.schemas.user import UserSchema
 
 task_router = APIRouter(prefix="/tasks")
 
@@ -81,3 +82,4 @@ def delete_task(
 ) -> JSONResponse:
     TaskOrm.delete_task(task_id=task_id)
     return JSONResponse(content="Task deleted")
+

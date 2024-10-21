@@ -4,7 +4,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Integer, ForeignKey, DateTime
 
 from db.models.base_model import BaseModel
-from db.models.user import User
 
 
 class Task(BaseModel):
@@ -29,4 +28,11 @@ class Task(BaseModel):
         onupdate=datetime.datetime.utcnow,
         nullable=False
     )
-
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey('user.id'),
+        nullable=False
+    )
+    user: Mapped["User"] = relationship(
+        'User',
+        back_populates="tasks"
+    )

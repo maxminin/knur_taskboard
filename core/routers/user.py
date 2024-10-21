@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
 from db.queries.user import UserORM
+from utils.schemas.task import TaskSchema
 from utils.schemas.user import UserSchema
 from utils.pydatic_to_orm.user import pydantic_to_sqlalchemy
 
@@ -71,10 +72,18 @@ def update_user(
 
 
 @user_router.delete(
-    "/delete"
+    "   /delete"
 )
 def delete_user(
         user_id: int
 ) -> JSONResponse:
     UserORM.delete_user(user_id)
     return JSONResponse(content="User deleted")
+
+
+@user_router.get("{user_id}/tasks")
+def get_user_tasks(user_id: int) -> JSONResponse:
+    user_tasks = UserORM.get_user_tasks(user_id=user_id)
+    tasks_serializable = [TaskSchema.from_orm(task).dict() for task in user_tasks]
+    return JSONResponse(content={"Tasks": tasks_serializable})
+
